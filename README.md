@@ -1,148 +1,134 @@
-🎓 Student Performance Analysis System
+Student Performance Analysis System
 
-📌 Project Overview
+A beginner-friendly Flask + MySQL project for maintaining student profiles, subjects and marks, then analysing academic performance using Pandas, NumPy and Matplotlib.
 
-The Student Performance Analysis System is a web-based application developed using Python, Flask, MySQL, Pandas, NumPy and Matplotlib.
+1. Requirements
 
-This system helps educational institutions manage student records, analyze academic performance, calculate grades, identify low-performing students and generate graphical reports.
+- Python 3.10 or newer
+- Visual Studio Code
+- MySQL Server
+- MySQL Workbench (or another MySQL client)
 
-🎯 Objectives
+2. Open Project in VS Code
 
-- Maintain student academic records.
-- Analyze subject-wise marks.
-- Calculate total marks and percentages.
-- Identify low-performing students.
-- Generate performance charts.
-- Support better academic decision-making.
+1. Extract the ZIP file.
+2. Open Visual Studio Code.
+3. Select File → Open Folder.
+4. Select "student_performance_analysis_system".
+5. Open Terminal → New Terminal.
 
-✨ Features
+3. Create Virtual Environment and Install Packages
 
-- Student record management
-- Subject management
-- Marks entry and management
-- Academic performance analysis
-- Grade calculation
-- Pass and fail identification
-- Low performer detection
-- Data visualization
-- Database integration
-- Input validation
+Windows:
 
-🛠️ Technologies Used
-
-Technology| Purpose
-Python| Backend programming
-Flask| Web framework
-MySQL| Database
-Pandas| Data analysis
-NumPy| Numerical calculations
-Matplotlib| Data visualization
-Pytest| Testing
-
-📂 Project Structure
-
-Student-Performance-Analysis-System/
-│
-└── student_performance/
-    ├── app.py
-    ├── analysis.py
-    ├── config.py
-    ├── db.py
-    ├── validators.py
-    ├── seed.py
-    ├── schema.sql
-    ├── requirements.txt
-    ├── .env.example
-    ├── .gitignore
-    ├── README.md
-    │
-    └── tests/
-        └── test_analysis.py
-
-⚙️ Installation and Setup
-
-Step 1: Clone Repository
-
-git clone https://github.com/swathisunkara542-blip/Student-Performance-Analysis-System.git
-
-Step 2: Navigate to Project Folder
-
-cd Student-Performance-Analysis-System/student_performance
-
-Step 3: Install Dependencies
-
+py -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 
-Step 4: Configure Database
+If PowerShell blocks activation, run:
 
-- Install MySQL 8.0.16 or later.
-- Create the database.
-- Configure database credentials in the ".env" file.
-- Use ".env.example" as a reference.
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.venv\Scripts\activate
 
-Step 5: Create Database Tables
+4. Create MySQL Database
 
-mysql -u root -p < schema.sql
+1. Start MySQL Server.
+2. Open MySQL Workbench.
+3. Connect to your local MySQL server.
+4. Open "schema.sql".
+5. Click the Execute button (lightning bolt).
 
-Step 6: Load Sample Data
+This creates the database, three tables and five sample subjects.
+
+5. Configure Database Connection
+
+1. Copy ".env.example".
+2. Rename the copied file to ".env".
+3. Open ".env".
+4. Set "DB_USER" and "DB_PASSWORD" to your local MySQL username and password.
+5. Keep "DB_NAME=student_performance_db".
+
+Never upload ".env" or share your database password.
+
+6. Add Sample Data
+
+Run the following command in the VS Code terminal:
 
 python seed.py
 
-Step 7: Run Application
+This inserts synthetic sample students and marks. It is safe to run again.
+
+7. Run the Application
+
+Execute:
 
 python app.py
 
-Application URL:
+Open the local address printed in the terminal, usually:
 
 "http://127.0.0.1:5000"
 
-📊 Calculation Rules
+8. Main Pages
 
-- Subject score is calculated using assessment marks.
-- Total marks are calculated from subject scores.
-- Percentage is calculated based on maximum marks.
-- Students must meet subject pass marks to pass.
-- Grades are assigned according to percentage.
-- Marks outside the allowed range are rejected.
+Page| Description
+"/"| Dashboard
+"/students"| Add, view, update and delete students
+"/subjects"| View and add subjects
+"/marks"| Enter and delete marks
+"/reports"| Student and subject analysis reports
+"/api/health"| Database health check
+"/api/students"| GET and POST student API
+"/api/summary"| Dashboard summary JSON
 
-🔗 API Endpoints
+9. Analysis Rules Used
 
-Method| Endpoint| Purpose
-GET/POST| "/students"| Add and list students
-GET/PUT/DELETE| "/students/<id>"| Manage student records
-GET/POST| "/subjects"| Add and list subjects
-GET/POST| "/marks"| Add and list marks
+- Assessment percentage = (Marks Obtained / Maximum Marks) × 100.
+- A mark record passes when marks obtained are greater than or equal to that subject's pass marks.
+- Student average percentage = Mean of the student's recorded assessment percentages.
+- Dashboard class average = Mean of student average percentages.
 
-🧪 Testing
+Grade Calculation
 
-Run the following command:
+Grade| Percentage
+A+| 90 and above
+A| 80–89
+B| 70–79
+C| 60–69
+D| 40–59
+F| Below 40
 
-pytest
+- "Needs support" is a project reporting flag for average percentage below 40. It is not a permanent label about a student.
+- Subject charts normalize average marks as a percentage of each subject's maximum marks for fair comparison.
 
-🔐 Security
+10. Charts and Data Visualization
 
-- Database credentials are managed through environment variables.
-- Sensitive files are excluded using ".gitignore".
-- ".env.example" provides sample configuration.
+Dashboard and report charts are interactive Chart.js visualizations built from current MySQL assessment records.
 
-🚀 Future Enhancements
+Dashboard Charts
 
-- Interactive performance dashboard
-- Student performance prediction
-- Attendance analysis
-- Automated report generation
-- Advanced data visualization
+- Average percentage by subject.
+- Pass/fail totals.
+- Average percentage by student.
 
-👩‍💻 Author
+Reports Charts
 
-Swathi
+- Subject average and pass-rate comparison.
+- Student average comparison.
+- Grade distribution.
 
-GitHub: https://github.com/swathisunkara542-blip
+Chart.js is loaded from its CDN, so the browser needs an internet connection to render interactive charts.
 
-📝 Conclusion
+11. Troubleshooting
 
-The Student Performance Analysis System provides an efficient way to manage student records, evaluate academic results and visualize performance. It helps identify students who need additional academic support and promotes data-driven educational decisions.
+Problem| Solution
+Access denied| Check DB_USER and DB_PASSWORD in ".env".
+Unknown database| Execute "schema.sql" in MySQL Workbench.
+Can't connect| Make sure MySQL Server is running and DB_HOST/DB_PORT are correct.
+No module named ...| Activate ".venv" and run "pip install -r requirements.txt".
 
----
+12. Limitations
 
-⭐ If you like this project, please give it a star on GitHub!
+- This is an educational mini project using synthetic sample data.
+- It has no login or role management system.
+- It is not an official institutional grading platform.
+- The current student summary averages recorded assessment percentages; it does not assume unrecorded assessments are zero.
